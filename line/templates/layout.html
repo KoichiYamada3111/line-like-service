@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang='ja'>
+  <head>
+    {% block title %}{% endblock %}
+<!--    <base href=session['base'] target='_self'>-->
+<!--    <base href="/">-->
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="/static/mycss.css" rel="stylesheet" type="text/css">
+<!--    <script>
+      $("#navMenu").resize(function () {
+        $('#godown').height($("#navMenu").height() + 10);
+      });
+      if ($("#navMenu").height() > $('#godown').height()) $('#godown').height($("#navMenu").height() + 10);
+    </script>-->
+  </head>
+  
+  
+  <body>
+  
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
+    <div class="container-fluid">
+      {% if session.user_id %}
+        <a class="navbar-brand" href="/user/{{ session.user_id }}/chat"><strong>Line</strong></a>
+      {% else %}
+        <a class="navbar-brand" href="/"><strong>Line</strong></a>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+          {% if session.user_id %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/{{ session.user_id }}/{{ session.user_id }}/home">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/{{ session.user_id }}/friend_list">Friend</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/{{ session.user_id }}/chat">Chat</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/{{ session.user_id}}/friend"><strong>+</strong></a>
+            </li>
+          {% endif %}
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          {% if session.user_id %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          {% endif %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </nav>
+    
+    
+    
+    {% if warning %}
+      <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span area-hidden='true'>&times;</span>
+        </button>
+        <strong>{{ warning }}</strong>
+      </div>
+    {% endif %}
+
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{ message }}</strong>
+      </div>
+    {% endfor %}
+    
+    
+    {% block body %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <script src="/static/bootstrap.bundle.min.js"></script>
+    
+    <script>
+      $(window).on('scroll load',function(e) {
+      var bg = $('bg').height();
+      var scrollnow = $(window).scrollTop();
+      var scrollblur = (bg+10*scrollnow)/bg-1;
+      var blur = Math.floor(scrollblur);
+      $('bg-lower').text( blur+'PX' );
+      $('bg').css('-webkit-filter','blur('+blur+'px)');
+      $('bg').css('filter','blur('+blur+'px)');
+      });
+    </script>
+  </body>
+</html>

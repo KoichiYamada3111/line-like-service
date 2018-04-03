@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>{{ user.username }} Setting</title>
+{% endblock %}
+
+{% block body %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 mt-3">
+        <h2>Setting</h2>
+        <form action="setting" method="POST">
+          <fieldset>
+            <legend>Basic Information</legend>
+            <div class="form-group">
+              <lable for="username">User Name</lable>
+              <input type="text" class="form-control" id="username" name="username" value={{ user.username }}>
+            </div>
+            <div class="form-group">
+              <lable for="password">Password</lable>
+              <input type="text" class="form-control" id="username" name="username" value="****">
+            </div>
+            <div class="form-group">
+              <lable for="email">Email</lable>
+              <input type="text" class="form-control" id="username" name="username" value={{ user.email }}>
+            </div>
+            <div class="form-group">
+              <lable for="phone_number">Phone Number</lable>
+              <input type="text" class="form-control" id="username" name="username" value={{ user.phone_number }}>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Image</legend>
+            <div class="form-group">
+              <lable for="input_icon">Icon</lable>
+              <input type="file" class="form-control-file" name="ic" id="input_icon" aria-describedby="fileHelp">
+            </div>
+            <div class="form-group">
+              <lable for="input_background">Background</lable>
+              <input type="file" class="form-control-file" name="bg" id="input_background" aria-describedby="fileHelp">
+            </div>
+          </fieldset>
+          <button class="btn btn-primary" type="submit">Send</button>
+          <button class="btn btn-warning" type="reset">Reset</button>
+        </form>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+

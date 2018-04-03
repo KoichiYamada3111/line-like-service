@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Friend List</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class='col-md-8 mt-3'>
+        <h2>Friend List</h2>
+        {% if friend_list %}
+          <div class="list-group">
+            {% for mem in friend_list %}
+              <a href='/user/{{ session.user_id }}/{{ mem.user_id }}/chat' class="list-group-item list-group-item-action">
+                {% if mem.ic_stored %}
+                  <img src="{{ url_for('static', filename='img/'+ mem.user_id|string + '/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                {% else %}
+                  <img src="{{ url_for('static', filename='pict/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                {% endif %}
+                {{ mem.username }}
+<!--                <span class="badge badge-primary badge-pill">{{ unread_num }}</span>-->
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>Click "+" above to add a new friend!</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

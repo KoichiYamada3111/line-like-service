@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Add Post</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 mt-3">
+        <form method='POST' enctype="multipart/form-data">
+          <fieldset>
+            <legend>Add Post</legend>
+            <div class="form-group">
+              <lable for="input_text">
+              <textarea class="form-control" id="input_text" name="text" row="5" oninvalid="alert('You have to put some words!');" required></textarea>
+            </div>
+            <div class="form-group">
+              <lable for="input_img">File</lable>
+              <input type="file" class="form-control-file" name="img" id="input_img" aria-describedby="fileHelp">
+            </div>
+            <button class="btn btn-primary" type="submit">Send</button>
+            <button class="btn btn-warning" type="reset">Reset</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

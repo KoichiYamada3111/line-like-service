@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  <title>User List</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class='col-md-8 mt-3'>
+        <h2>User List</h2>
+        {% if from_mem %}
+          <div class='list-group'>
+            {% for mem in from_mem %}
+              <a href={{ url_for('show_messages', from_user_id=session.user_id, to_user_id=mem.user_id) }} class='list-group-item list-group-item-action'>
+                {% if mem.ic_stored %}
+                  <img src="{{ url_for('static', filename='img/'+ mem.user_id|string + '/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                {% else %}
+                  <img src="{{ url_for('static', filename='pict/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                {% endif %}
+                <strong>{{ mem.username }}</strong>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>Let us start chatting!</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

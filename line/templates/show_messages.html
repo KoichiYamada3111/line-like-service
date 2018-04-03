@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  <title>Messages</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class='col-md-2'></div>
+      <div class='col-md-8 mt-3'>
+        <a class="btn" data-toggle="modal" data-target="#userModal"><h3>{{ user.username }}</h3></a>
+        <div class="modal fade" id="userModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">{{ user.username }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                {% if user.bg_stored %}
+                  <img src="{{ url_for('static', filename='img/' + user.user_id|string + '/bg.png') }}" width='100%'>
+                {% else %}
+                  <img src="{{ url_for('static', filename='pict/bg.png') }}" width="100%">
+                {% endif %}
+                {% if user.ic_stored %}
+                  <img src="{{ url_for('static', filename='img/'+ mem.user_id|string + '/ic.jpg') }}" width='100%' class="rounded-circle" alt="No Icon Available" width=45px height=45px border='1' align='center'>
+                {% else %}
+                  <img src="{{ url_for('static', filename='pict/ic.jpg') }}" width='100%' class="rounded-circle" alt="No Icon Available" width=45px height=45px border='1' align='center'>
+                {% endif %}
+                <div align='center'>
+                  <h3>{{ user.username }}</h3>
+                  <small>{{ user.comment }}</small>
+                </div>
+              </div>
+              <div class="modal-footer">
+                {% if friend_flag %}
+                  <form action="#" method='GET'>
+                    <button type="button" class="btn">Remove from Friend list</button>
+                  </form>
+                {% else %}
+                  <form action="#" method='GET'>
+                    <button type="button" class="btn">Add Friend</button>
+                  </form>
+                {% endif %}
+                <form action="{{ url_for('home', from_user_id=session.user_id, user_id=user.user_id)  }}">
+                  <button type="button" class="btn">Home</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form action="{{ url_for('add_entry', from_user_id=session.user_id, to_user_id=user.user_id) }}" method='POST'>
+          <div class="form-group">
+            <lable for="input_text">Text</lable>
+            <textarea class="form-control" id="input_text" name="text" rows="3" oninvalid="alert('You cannot send nothing!');" required></textarea>
+            <button class="btn btn-primary" type=submit>Share</button>
+            <button class="btn btn-warning" type=reset>Reset</button>
+            <input type='hidden' name='to_user_id' value={{ user.user_id }}>
+          </div>
+        </form>
+        
+        <div class="line-bc">
+          {% if entries %}
+            {% for entry in entries %}
+              {% if entry.from_user_id == user.user_id %}
+                <div class="balloon6">
+                  <div align='left'><small>{{ entry.date }}</small></div>
+                  <div class="faceicon">
+                    {% if user.ic_stored %}
+                      <img src="{{ url_for('static', filename='img/'+ user.user_id|string + '/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                    {% else %}
+                      <img src="{{ url_for('static', filename='pict/ic.jpg') }}" class="rounded-circle" alt="No Icon Available" width=45px height=45px>
+                    {% endif %}
+                  </div>
+                  <div class="chatting">
+                    <div class="says">
+                      <p>{{ entry.text|safe }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% else %}
+                <div align='right'><small>{{ entry.date }}</small></div>
+                <div class="mycomment">
+                  <p>{{ entry.text|safe }}</p>
+                </div>
+              {% endif %}
+            {% endfor %}
+          
+          {% else %}
+            <p><em>No entries here so far. Let us begin chatting!</em></p>
+          {% endif %}
+        </div>
+      </div>
+      <div class='col-md-2'></div>
+    </div>
+  </div>
+  <style>
+    .line-bc {
+      padding: 20px 10px;
+      max-width: 100%;
+      margin: 15px auto;
+      text-align: right;
+      font-size: 14px;
+      background:#ffffff;
+    }
+  </style>
+  
+{% endblock %}
